@@ -1,56 +1,111 @@
 import './App.css';
+import './game/style.css';
+
+import Screen from './game/Screen';
+import Pad from './game/buttons/Pad';
+import StartSelect from './game/buttons/StartSelect';
+import Actions from './game/buttons/Actions';
+import { use, useEffect, useState } from 'react';
+
 
 function App() {
+  
+  const [pokemones, setPokemones] = useState([]);
+  const [hoverPokemon, setHoverPokemon] = useState(0);
+  const [selectedPokemones, setSelectPokemones] = useState([])
+  const [health, setHealth] = useState({ player: 100, rival: 100 });
+
+
+  const BASE_URL = "https://pokeapi.co/api/v2/";
+
+  const getPokemones = async() => {
+    const res =  await fetch(`${BASE_URL}/pokemon`);
+    const data = await res.json();
+    console.log(data);
+    const pokemonsDetails = await getDetails(data.results);
+    setPokemones(pokemonsDetails);
+  
+
+  }
+
+  const getDetails = async (results) => {
+    const res = await Promise.all(results.map((result) => fetch(result.url)));
+    const data = await Promise.all(res.map(gato => gato.json()) );
+    return data;
+}
+
+const handlePress = (dir) => {
+  console.log(dir);
+  if (dir === 'right') {
+    setHoverPokemon(hoverPokemon + 1);
+  }
+  if (dir === 'left') {
+    setHoverPokemon(hoverPokemon - 1);
+  }
+  if (dir === 'down') {
+    setHoverPokemon(hoverPokemon + 3);
+  }
+  if (dir === 'up') {
+    setHoverPokemon(hoverPokemon - 3);
+  }
+
+
+};
+
+const handleSelectPokemon = () => {
+  console.log('select pokemon', hoverPokemon);
+  const pokemonSelected = pokemones.filter(
+    (pokemon) => pokemon.id === hoverPokemon
+  );
+
+  console.log({pokemonSelected});
+
+  const rival = computerSelection();
+  const selections = [pokemonSelected, rival];
+  console.log(selections);
+  setSelectPokemones(selections);
+
+  setHealth({
+    player: 100,         
+    rival: 80            
+  });
+};
+
+
+const computerSelection = () =>{
+  const randomId = Math.floor(Math.random() * pokemones.length);
+  console.log(randomId);
+
+  const selectElement = pokemones.filter((pokemon) => pokemon.id === randomId);
+  return selectElement;
+}
+
+  useEffect (() => {
+    if (selectedPokemones.length === 2 && health.rival > 0) {
+      const timeout = setTimeout(() => {
+        setHealth((prev) => ({
+          ...prev,
+          rival: Math.max(prev.rival - 5, 0),
+        }));
+      }, 900); 
+  
+      return () => clearTimeout(timeout); 
+    }
+    getPokemones();
+
+  }, [selectedPokemones, health.rival]);
+
   return (
-    <>
-      <div style={{ display: 'flex', justifyContent: 'center' }}>
-        {/* container game */}
-        <div
-          style={{ width: '350px', height: '500px', border: '2px black solid', borderRadius: '5px 5px 35px 5px', backgroundColor: 'white' }}
-        >
-          {/* container screen */}
-          <div
-            style={{
-              paddingTop: '5%',
-              paddingBottom: '25%',
-              justifyContent: 'center',
-              display: 'flex',
-            }}
-          >
-            <div
-              style={{
-                width: '85%',
-                height: '200px',
-                backgroundColor: 'olive',
-              }}
-            ></div>
-          </div>
-
-          {/* container buttons */}
-          <div style={{display: 'flex', justifyContent: 'space-around'}}>
-            <div style={{width: "60px", height:"60px", backgroundColor:"black"}}>
-              <div>
-                <button style = {{backgroundColor: 'blue', width: '40px', height: '40px'}}></button>
-              </div>
-              <div></div>
-            </div>
-            <div style={{paddingTop: "30%"}} >
-              <div style={{width: "60px", height:"60px", alignContent:'center', backgroundColor:"gray"}}> 
-                <div style = {{backgroundColor: 'black', width: '40px', height: '20px', borderRadius: '50%'}}> </div>
-                <div style = {{backgroundColor: 'black', width: '40px', height: '20px', borderRadius: '50%'}}></div>
-              
-              </div>
-            </div>
-            <div style={{width: "60px", height:"60px", display: 'flex', backgroundColor:"black"}}>
-              <div style = {{backgroundColor: '#821660', width: '40px', height: '40px', borderRadius: '50%'}}></div>
-              <div style = {{backgroundColor: '#821660', width: '40px', height: '40px', borderRadius: '50%'}}></div>
-            </div>
-    
-          </div>
-
+    <div className="app-wrapper">
+      <div className="game-container">
+        <Screen pokemones={pokemones} hoverPokemon={hoverPokemon} selectedPokemones = {selectedPokemones } health={health}/>
+        <div className="button-row">
+          <Pad handlePress={handlePress}/>
+          <StartSelect handleSelectPokemon={handleSelectPokemon}/>
+          <Actions />
         </div>
       </div>
-    </>
+    </div>
   );
 }
 
