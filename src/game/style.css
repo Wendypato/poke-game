@@ -1,0 +1,203 @@
+/* ---------- GENERAL ---------- */
+.app-wrapper {
+  display: flex;
+  justify-content: center;
+  
+}
+
+.game-container {
+  width: 350px;
+  height: 500px;
+  border: 2px solid black;
+  border-radius: 5px 5px 35px 5px;
+  background-color: white;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+/* ---------- SCREEN ---------- */
+.container-screen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 5%;
+  padding-bottom: 5%;
+}
+
+.screen {
+  width: 90%;
+  height: 200px;
+  background-color: #9ca04c;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  border: 2px solid #333;
+  border-radius: 8px;
+  padding: 5px;
+}
+
+.screen-text {
+  color: black;
+}
+
+.container-text {
+  margin-top: 8px;
+  font-family: monospace;
+  font-size: 12px;
+  text-align: center;
+}
+
+/* ---------- BUTTONS LAYOUT ---------- */
+.button-row {
+  display: flex;
+  justify-content: space-around;
+}
+
+/* ---------- ACTION BUTTONS ---------- */
+.action-btn {
+  background-color: #821660;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+.container-action {
+  width: 90px;
+  height: 60px;
+  display: flex;
+
+}
+
+/* ---------- START/SELECT BUTTONS ---------- */
+.container-start-select {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+  transform: rotate(-5deg);
+  
+}
+
+.container-btn-start {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transform: rotate(-15deg);
+}
+
+.start-select-btn {
+  background-color: gray;
+  color: white;
+  width: 50px;
+  height: 20px;
+  border-radius: 10px;
+  font-size: 8px;
+  font-family: monospace;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.3);
+  cursor: pointer;
+  border: none;
+}
+
+/* ---------- PAD ---------- */
+.container-pad {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 5%;
+}
+
+.pad-btn {
+  width: 35px;
+  height: 35px;
+  border-radius: 4px;
+  background-color: #010104;
+  box-shadow: 1px 2px 3px #848484;
+}
+
+/* ---------- MISC ---------- */
+.container-central {
+  display: flex;
+}
+
+
+/* BATTLE SCREEN */
+.battle-player-container {
+  display: flex;
+  width: 100%;
+  padding-left: 200px;
+}
+
+.battle-rival-container {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  padding-left: 30px;
+}
+
+.battle-box {
+  text-align: center;
+}
+
+.battle-sprite {
+  width: 100px;
+  height: 100px;
+}
+
+.battle-sprite.player {
+  margin-top: -12px;
+}
+
+/* HP BAR */
+.hp-bar-bg {
+  width: 70px;
+  height: 6px;
+  background-color: lightgray;
+  border-radius: 3px;
+  margin-bottom: 4px;
+  overflow: hidden;
+}
+
+.hp-bar-fill {
+  width: 100%;
+  height: 100%;
+  background-color: red;
+}
+
+/* POKEMON LIST */
+.pokemon-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.pokemon-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 5px;
+  border-radius: 5px;
+  padding: 5px;
+}
+
+.pokemon-card.highlight {
+  background-color: yellow;
+}
+
+.pokemon-name {
+  font-family: 'Pokemon Classic';
+  font-size: 8px;
+  color: black;
+  text-transform: capitalize;
+}
+
+  
+
+
+  
+  
+  
+
